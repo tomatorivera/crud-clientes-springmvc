@@ -17,7 +17,7 @@ public class ClienteController {
 	
 	@GetMapping({"/", "/index", "/listar"})
 	public String listar(Model model) {
-//		model.addAttribute("clientes", clienteService.listar());
+		model.addAttribute("clientes", clienteService.listar());
 		return "index";
 	}
 	
