@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tocttaviano.crudclientes.app.models.Cliente;
 import com.tocttaviano.crudclientes.app.services.IClienteService;
@@ -60,7 +61,7 @@ public class ClienteController {
 	}
 	
 	@PostMapping("/guardar")
-	public String guardar(@Valid Cliente cliente, BindingResult result, SessionStatus status, Model model) {
+	public String guardar(@Valid Cliente cliente, BindingResult result, SessionStatus status, Model model, RedirectAttributes mensajeria) {
 		logger.info("Cliente entrante: " + cliente);
 		if(result.hasErrors()) {
 			model.addAttribute("tituloPagina", (cliente.getId() != null && cliente.getId() > 0) ? "Editar cliente" : "Agregar cliente");
@@ -68,24 +69,28 @@ public class ClienteController {
 		}
 		
 		try {
+			mensajeria.addFlashAttribute("mensajeExito", (cliente.getId() != null && cliente.getId() > 0) ? "Cliente editado exitosamente" : "Cliente creado exitosamente");
 			clienteService.guardar(cliente);
 			status.setComplete();
 			return "redirect:/index";
 		} catch (Exception e) {
 			logger.error("Error al guardar el cliente: " + e.getMessage());
-			return "clienteForm";
+			mensajeria.addFlashAttribute("mensajeError", "Ha ocurrido un error de sistema guardando al cliente");
+			return "redirect:/index";
 		}
 	}
 	
 	@GetMapping("/eliminar/{id}")
-	public String eliminar(@PathVariable Long id) {
+	public String eliminar(@PathVariable Long id, RedirectAttributes mensajeria) {
 		Optional<Cliente> optCliente = clienteService.buscarPorId(id);
 		if (optCliente.isEmpty()) {
 			logger.warn("Cliente con ID " + id + " no encontrado para eliminación.");
+			mensajeria.addFlashAttribute("mensajeError", "No se ha encontrado al cliente especificado para eliminar");
 			return "redirect:/index";
 		}
 		
 		clienteService.eliminar(id);
+		mensajeria.addFlashAttribute("mensajeExito", "Cliente eliminado exitosamente");
 		return "redirect:/index";
 	}
 }

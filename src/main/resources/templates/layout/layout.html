@@ -34,9 +34,10 @@
 		<h1 class="text-start py-3 border-bottom" th:text="${tituloPagina}"></h1>
 	</header>
 	
-	<main class="container my-3" th:fragment="main">
-        <div th:insert="${contenido}"></div>
-	</main>
+	<section class="container my-3" th:fragment="errores">
+        <div class="alert alert-success" th:if="${mensajeExito != null}" th:text="${mensajeExito}"></div>
+        <div class="alert alert-danger" th:if="${mensajeError != null}" th:text="${mensajeError}"></div>
+	</section>
 	
 	<footer class="bg-dark text-light text-center py-3 mt-5" th:fragment="footer">
         <p class="mb-0">By Tomas Octtaviano</p>
