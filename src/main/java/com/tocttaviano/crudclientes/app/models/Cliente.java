@@ -9,6 +9,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "clientes")
@@ -18,8 +21,17 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotEmpty(message = "El nombre no puede estar vacío")
+	@Size(max = 45, message = "No se admiten nombres con más de 45 caracteres")
 	private String nombre;
+	
+	@NotEmpty(message = "El apellido no puede estar vacío")
+	@Size(max = 45, message = "No se admiten apellidos con más de 45 caracteres")
 	private String apellido;
+	
+	@NotEmpty(message = "El email no puede estar vacío")
+	@Email(message = "El email debe ser válido")
+	@Size(max = 45, message = "No se admiten emails con más de 45 caracteres")
 	private String email;
 	
 	@Column(name = "fecha_creacion")

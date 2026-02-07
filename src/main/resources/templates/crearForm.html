@@ -21,15 +21,18 @@
 		<form id="form-crear-cliente" th:action="@{/crear}" th:object="${cliente}" method="POST">
 			<section class="mb-3">
 				<label for="nombre" class="form-label">Nombre:</label>
-				<input th:field="*{nombre}" class="form-control" />
+				<input th:field="*{nombre}" class="form-control" required maxlength="45" />
+				<span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger"></span>
 			</section>
 			<section class="mb-3">
 				<label for="apellido" class="form-label">Apellido:</label>
-				<input th:field="*{apellido}" class="form-control" />
+				<input th:field="*{apellido}" class="form-control" required maxlength="45" />
+				<span th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}" class="text-danger"></span>
 			</section>
 			<section class="mb-3">
 				<label for="email" class="form-label">Email:</label>
-				<input th:field="*{email}" class="form-control" />
+				<input type="email" th:field="*{email}" class="form-control" required maxlength="45" />
+				<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span>
 			</section>
 			<input type="submit" value="Agregar" class="btn btn-primary" />
 		</form>

@@ -4,11 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.tocttaviano.crudclientes.app.models.Cliente;
 import com.tocttaviano.crudclientes.app.services.IClienteService;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class ClienteController {
@@ -34,8 +37,11 @@ public class ClienteController {
 	}
 	
 	@PostMapping("/crear")
-	public String guardar(Cliente cliente) {
-		logger.info("Nuevo cliente: " + cliente);
+	public String guardar(@Valid Cliente cliente, BindingResult result) {
+		logger.info("Cliente entrante: " + cliente);
+		if(result.hasErrors())
+			return "crearForm";
+		
 		return "redirect:/index";
 	}
 }
