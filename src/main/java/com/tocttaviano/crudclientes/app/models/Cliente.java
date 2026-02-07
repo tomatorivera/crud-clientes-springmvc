@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,6 +24,11 @@ public class Cliente {
 	
 	@Column(name = "fecha_creacion")
 	private LocalDateTime fechaCreacion;
+	
+	@PrePersist
+	public void prePersist() {
+		fechaCreacion = LocalDateTime.now();
+	}
 
 	public Long getId() {
 		return id;
@@ -63,5 +69,10 @@ public class Cliente {
 	public void setFechaCreacion(LocalDateTime fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Cliente [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email
+				+ ", fechaCreacion=" + fechaCreacion + "]";
+	}
 }
