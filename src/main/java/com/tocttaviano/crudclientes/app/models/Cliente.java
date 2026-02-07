@@ -21,17 +21,17 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotEmpty(message = "El nombre no puede estar vacío")
-	@Size(max = 45, message = "No se admiten nombres con más de 45 caracteres")
+	@NotEmpty
+	@Size(max = 45)
 	private String nombre;
 	
-	@NotEmpty(message = "El apellido no puede estar vacío")
-	@Size(max = 45, message = "No se admiten apellidos con más de 45 caracteres")
+	@NotEmpty
+	@Size(max = 45)
 	private String apellido;
 	
-	@NotEmpty(message = "El email no puede estar vacío")
-	@Email(message = "El email debe ser válido")
-	@Size(max = 45, message = "No se admiten emails con más de 45 caracteres")
+	@NotEmpty
+	@Email
+	@Size(max = 45)
 	private String email;
 	
 	@Column(name = "fecha_creacion")
