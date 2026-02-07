@@ -42,6 +42,13 @@ public class ClienteController {
 		if(result.hasErrors())
 			return "crearForm";
 		
+		try {
+			clienteService.guardar(cliente);
+		} catch (Exception e) {
+			logger.error("Error al guardar el cliente: " + e.getMessage());
+			return "crearForm";
+		}
+		
 		return "redirect:/index";
 	}
 }

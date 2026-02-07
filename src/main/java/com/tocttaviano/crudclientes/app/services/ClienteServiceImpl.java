@@ -21,4 +21,9 @@ public class ClienteServiceImpl implements IClienteService {
 		return (List<Cliente>) clienteRepository.findAll();
 	}
 
+	@Override
+	public Cliente guardar(Cliente cliente) {
+		return clienteRepository.save(cliente);
+	}
+
 }

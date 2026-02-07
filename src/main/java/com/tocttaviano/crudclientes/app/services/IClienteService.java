@@ -5,7 +5,6 @@ import java.util.List;
 import com.tocttaviano.crudclientes.app.models.Cliente;
 
 public interface IClienteService {
-
 	List<Cliente> listar();
-	
+	Cliente guardar(Cliente cliente);
 }
