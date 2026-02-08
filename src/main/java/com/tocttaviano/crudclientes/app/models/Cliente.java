@@ -40,6 +40,8 @@ public class Cliente {
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime fechaCreacion;
 	
+	private String foto;
+	
 	@PrePersist
 	public void prePersist() {
 		fechaCreacion = LocalDateTime.now();
@@ -84,10 +86,18 @@ public class Cliente {
 	public void setFechaCreacion(LocalDateTime fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
+	
+	public String getFoto() {
+		return foto;
+	}
+	
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
 
 	@Override
 	public String toString() {
 		return "Cliente [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email
-				+ ", fechaCreacion=" + fechaCreacion + "]";
+				+ ", fechaCreacion=" + fechaCreacion + ", foto= " + foto + "]";
 	}
 }

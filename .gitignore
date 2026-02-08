@@ -131,3 +131,4 @@ replay_pid*
 
 # bd
 src/main/resources/application.properties
+src/main/resources/static/uploads/*

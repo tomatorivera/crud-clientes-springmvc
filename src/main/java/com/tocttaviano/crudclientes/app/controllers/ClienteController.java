@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tocttaviano.crudclientes.app.models.Cliente;
@@ -69,21 +70,32 @@ public class ClienteController {
 	}
 	
 	@PostMapping("/guardar")
-	public String guardar(@Valid Cliente cliente, BindingResult result, SessionStatus status, Model model, RedirectAttributes mensajeria) {
-		logger.info("Cliente entrante: " + cliente);
+	public String guardar(
+			@Valid Cliente cliente, 
+			BindingResult result, 
+			SessionStatus status, 
+			Model model, 
+			@RequestParam MultipartFile file,
+			RedirectAttributes mensajeria) 
+	{
+		logger.info("Cliente entrante: " + cliente + " | Foto: " + (file != null ? file.getOriginalFilename() : "No se ha cargado una foto"));
 		if(result.hasErrors()) {
 			model.addAttribute("tituloPagina", (cliente.getId() != null && cliente.getId() > 0) ? "Editar cliente" : "Agregar cliente");
 			return "clienteForm";
 		}
 		
 		try {
+			clienteService.guardar(cliente,  file);
+			
 			mensajeria.addFlashAttribute("mensajeExito", (cliente.getId() != null && cliente.getId() > 0) ? "Cliente editado exitosamente" : "Cliente creado exitosamente");
-			clienteService.guardar(cliente);
 			status.setComplete();
+			
+			logger.info("Cliente guardado: " + cliente);
 			return "redirect:/index";
 		} catch (Exception e) {
-			logger.error("Error al guardar el cliente: " + e.getMessage());
 			mensajeria.addFlashAttribute("mensajeError", "Ha ocurrido un error de sistema guardando al cliente");
+			logger.error("Error al guardar el cliente: " + e.getMessage());
+			e.printStackTrace();
 			return "redirect:/index";
 		}
 	}

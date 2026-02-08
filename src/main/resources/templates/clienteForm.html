@@ -6,7 +6,7 @@
 	<section th:insert="~{layout/layout :: header}"></section>
 	
 	<main class="container mt-3">
-		<form id="form-cliente" th:action="@{/guardar}" th:object="${cliente}" method="POST">
+		<form id="form-cliente" th:action="@{/guardar}" th:object="${cliente}" method="POST" enctype="multipart/form-data">
 			<section class="mb-3">
 				<label for="nombre" class="form-label">Nombre:</label>
 				<input th:field="*{nombre}" class="form-control" required maxlength="45" />
@@ -21,6 +21,11 @@
 				<label for="email" class="form-label">Email:</label>
 				<input type="email" th:field="*{email}" class="form-control" required maxlength="45" />
 				<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span>
+			</section>
+			<section class="mb-3">
+				<label for="file" class="form-label">Foto:</label>
+				<input type="file" name="file" id="file" class="form-control" />
+				<!-- <span th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}" class="text-danger"></span> -->
 			</section>
 			<input type="submit" value="Agregar" class="btn btn-primary" />
 		</form>
