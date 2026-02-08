@@ -23,11 +23,9 @@ import com.tocttaviano.crudclientes.app.repositories.IClienteRepository;
 public class ClienteServiceImpl implements IClienteService {
 	
 	private final IClienteRepository clienteRepository;
-	private final Path rutaArchivo;
 	
 	public ClienteServiceImpl(IClienteRepository clienteRepository) {
 		this.clienteRepository = clienteRepository;
-		this.rutaArchivo = Paths.get("src/main/resources/static/imagenes");
 	}
 	
 	@Override
@@ -39,14 +37,13 @@ public class ClienteServiceImpl implements IClienteService {
 	@Override
 	@Transactional
 	public Cliente guardar(Cliente cliente, MultipartFile foto) throws IOException {
-		System.out.println("Ruta absoluta del archivo: " + rutaArchivo.toAbsolutePath());
 		if (!foto.isEmpty())
 		{
 			// 1. Generar un nombre único para el archivo
 	        String nombreUnico = UUID.randomUUID().toString() + "_" + foto.getOriginalFilename();
 	        
 	        // 2. Definir la ruta (puede ser absoluta o relativa)
-	        Path rootPath = Paths.get("src/main/resources/static/uploads").resolve(nombreUnico);
+	        Path rootPath = Paths.get("uploads").resolve(nombreUnico);
 	        Path rootAbsolutPath = rootPath.toAbsolutePath();
 	        
 	        // 2. CREAR LA CARPETA SI NO EXISTE

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{layout/layout :: head}"></head>
+<body>
+    <section th:insert="~{layout/layout :: navbar}"></section>
+	<section th:insert="~{layout/layout :: errores}"></section>
+	
+	<main class="container my-3">
+		<section class="card">
+            <section class="card-header">
+                <h2 th:text="${tituloPagina}"></h2>
+            </section>
+            <section class="card-body">
+                <p><strong>Nombre:</strong> <span th:text="${cliente.nombre}"></span></p>
+                <p><strong>Apellido:</strong> <span th:text="${cliente.apellido}"></span></p>
+                <p><strong>Email:</strong> <span th:text="${cliente.email}"></span></p>
+                <p><strong>Fecha de creación:</strong> <span th:text="${cliente.fechaCreacion}"></span></p>
+				<section th:if="${cliente.foto != null && #strings.length(cliente.foto) > 0}" class="d-flex align-items-start gap-3">
+					<p><strong>Foto:</strong></p>
+					<img class="img-thumbnail rounded float-left" style="max-width: 200px;" th:src="@{/uploads/} + ${cliente.foto}" th:alt="'Foto de perfil del cliente ' + ${cliente.nombre}"/>
+				</section>
+                
+                <a th:href="@{/listar}" class="btn btn-secondary mt-3">Volver a la lista</a>
+            </section>
+        </section>
+	</main>
+	
+	<section th:insert="~{layout/layout :: footer}"></section>
+	<section th:insert="~{layout/layout :: scripts}"></section>
+</body>
+</html>

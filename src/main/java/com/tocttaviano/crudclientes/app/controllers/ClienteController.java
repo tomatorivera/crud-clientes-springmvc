@@ -47,6 +47,21 @@ public class ClienteController {
 		return "index";
 	}
 	
+	@GetMapping("/detalle/{id}")
+	public String detalle(@PathVariable Long id, Model model, RedirectAttributes mensajeria) {
+		Optional<Cliente> optCliente = clienteService.buscarPorId(id);
+		if (optCliente.isEmpty()) {
+			logger.warn("Cliente con ID " + id + " no encontrado para detalle.");
+			mensajeria.addFlashAttribute("mensajeError", "No se ha encontrado al cliente especificado para mostrar su detalle");
+			return "redirect:/index";
+		}
+		
+		Cliente cliente = optCliente.get();
+		model.addAttribute("cliente", cliente);
+		model.addAttribute("tituloPagina", "Detalle del cliente");
+		return "detalle";
+	}
+	
 	@GetMapping("/crear")
 	public String crear(Model model) {
 		model.addAttribute("cliente", new Cliente());
