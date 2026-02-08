@@ -11,6 +11,7 @@
 			<section class="d-flex justify-content-end align-items-center">
 				<a th:href="@{/crear}" class="btn btn-primary">+ Agregar producto</a>
 			</section>
+			
 			<section class="table-responsive">
 				<table class="table table-hover table-striped w-100">
 					<thead class="table-dark">
@@ -23,7 +24,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="cliente: ${clientes}">
+						<tr th:each="cliente: ${clientes.content}">
 							<td th:text="${cliente.nombre}"></td>
 							<td th:text="${cliente.apellido}"></td>
 							<td th:text="${cliente.email}"></td>
@@ -38,6 +39,8 @@
 					</tbody>
 				</table>
 			</section>
+			
+			<section th:replace="~{layout/paginator :: paginator(page=${clientes}, url='/listar')}"></section>
 		</section>
 	</main>
 	

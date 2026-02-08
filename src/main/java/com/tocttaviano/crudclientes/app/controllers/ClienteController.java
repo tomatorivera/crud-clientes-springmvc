@@ -4,12 +4,14 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -32,9 +34,15 @@ public class ClienteController {
 	}
 	
 	@GetMapping({"/", "/index", "/listar"})
-	public String listar(Model model) {
-		model.addAttribute("clientes", clienteService.listar());
+	public String listar(
+			@RequestParam(defaultValue="0") int numeroPagina, 
+			@RequestParam(defaultValue="5") int tamanioPagina,
+			Model model) 
+	{	
+		Page<Cliente> paginaClientes = clienteService.listarPaginado(numeroPagina, tamanioPagina); // <- Obtengo la página
+		
 		model.addAttribute("tituloPagina", "Listado de clientes");
+		model.addAttribute("clientes", paginaClientes);
 		return "index";
 	}
 	

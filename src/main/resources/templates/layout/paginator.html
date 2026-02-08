@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+    <nav th:fragment="paginator(page, url)" th:if="${page.totalPages > 0}">
+        <ul class="pagination justify-content-center">
+
+            <li class="page-item" th:classappend="${page.first} ? 'disabled'">
+                <a class="page-link" th:href="@{${url}(numeroPagina=0)}">&laquo; Primera</a>
+            </li>
+
+            <li class="page-item" th:classappend="${!page.hasPrevious()} ? 'disabled'">
+                <a class="page-link" th:href="@{${url}(numeroPagina=${page.number - 1})}">Anterior</a>
+            </li>
+
+            <li class="page-item" 
+                th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
+                th:classappend="${i == page.number} ? 'active'">
+                <a class="page-link" th:href="@{${url}(numeroPagina=${i})}" th:text="${i + 1}">1</a>
+            </li>
+
+            <li class="page-item" th:classappend="${!page.hasNext()} ? 'disabled'">
+                <a class="page-link" th:href="@{${url}(numeroPagina=${page.number + 1})}">Siguiente</a>
+            </li>
+
+            <li class="page-item" th:classappend="${page.last} ? 'disabled'">
+                <a class="page-link" th:href="@{${url}(numeroPagina=${page.totalPages - 1})}">Última &raquo;</a>
+            </li>
+
+        </ul>
+    </nav>
+
+</body>
+</html>
