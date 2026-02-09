@@ -27,7 +27,7 @@
 				<input type="file" name="file" id="file" class="form-control" />
 				<!-- <span th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}" class="text-danger"></span> -->
 			</section>
-			<input type="submit" value="Agregar" class="btn btn-primary" />
+			<input type="submit" th:value="${(cliente.id != null && cliente.id > 0) ? 'Editar' : 'Agregar'}" class="btn btn-primary" />
 		</form>
 	</main>
 	
