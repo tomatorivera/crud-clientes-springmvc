@@ -19,6 +19,6 @@ Tecnologías que utilicé:
 
 ## Imágenes
 
-[[img/listado-usuarios.jpeg]]
-[[img/formulario-agregado-edicion.jpeg]]
-[[img/detalle-cliente.jpeg]]
+![Listado de usuarios](img/listado-usuarios.jpeg)
+![Formulario de agregado y edición de usuarios](img/formulario-agregado-edicion.jpeg)
+![Detalle del cliente](img/detalle-cliente.jpeg)
