@@ -6,4 +6,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface IFotoPerfilService {
 	String guardarFotoPerfil(MultipartFile foto) throws IOException;
+	void eliminarFotoPerfil(String nombreArchivo) throws IOException;
 }

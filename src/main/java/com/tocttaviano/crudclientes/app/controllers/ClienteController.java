@@ -1,5 +1,6 @@
 package com.tocttaviano.crudclientes.app.controllers;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -124,8 +125,18 @@ public class ClienteController {
 			return "redirect:/index";
 		}
 		
-		clienteService.eliminar(id);
-		mensajeria.addFlashAttribute("mensajeExito", "Cliente eliminado exitosamente");
+		try 
+		{
+			clienteService.eliminar(optCliente.get());
+			mensajeria.addFlashAttribute("mensajeExito", "Cliente eliminado exitosamente");	
+		} 
+		catch (IOException e) 
+		{
+			mensajeria.addFlashAttribute("mensajeError", "Ha ocurrido un error de sistema eliminando al cliente");
+			logger.error("Error al eliminar el cliente: " + e.getMessage());
+			e.printStackTrace();	
+		}
+		
 		return "redirect:/index";
 	}
 }

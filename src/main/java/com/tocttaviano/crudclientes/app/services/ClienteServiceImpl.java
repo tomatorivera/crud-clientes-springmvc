@@ -10,13 +10,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.tocttaviano.crudclientes.app.models.Cliente;
 import com.tocttaviano.crudclientes.app.repositories.IClienteRepository;
 
 @Service
 public class ClienteServiceImpl implements IClienteService {
-	
+
 	private final IClienteRepository clienteRepository;
 	private final IFotoPerfilService fotoPerfilService;
 	
@@ -35,7 +34,12 @@ public class ClienteServiceImpl implements IClienteService {
 	@Transactional
 	public Cliente guardar(Cliente cliente, MultipartFile foto) throws IOException {
 		if (!foto.isEmpty())
+		{
+			if (cliente.getId() != null && cliente.getId() > 0 && cliente.getFoto() != null)
+				fotoPerfilService.eliminarFotoPerfil(cliente.getFoto());
+			
 			cliente.setFoto(fotoPerfilService.guardarFotoPerfil(foto));
+		}
 		
 		return clienteRepository.save(cliente);
 	}
@@ -48,8 +52,11 @@ public class ClienteServiceImpl implements IClienteService {
 	
 	@Override
 	@Transactional
-	public void eliminar(Long id) {
-		clienteRepository.deleteById(id);
+	public void eliminar(Cliente cliente) throws IOException {
+		if (cliente.getFoto() != null)
+			fotoPerfilService.eliminarFotoPerfil(cliente.getFoto());
+		
+		clienteRepository.deleteById(cliente.getId());
 	}
 
 	@Override

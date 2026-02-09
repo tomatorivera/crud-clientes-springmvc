@@ -34,4 +34,12 @@ public class FotoPerfilServiceImpl implements IFotoPerfilService{
         return nombreUnico;
 	}
 
+	@Override
+	public void eliminarFotoPerfil(String nombreArchivo) throws IOException {
+		Path rootPath = Paths.get("uploads").resolve(nombreArchivo);
+		Path rootAbsolutPath = rootPath.toAbsolutePath();
+		
+		Files.deleteIfExists(rootAbsolutPath);
+	}
+
 }
