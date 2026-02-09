@@ -100,7 +100,7 @@ public class ClienteController {
 		}
 		
 		try {
-			clienteService.guardar(cliente,  file);
+			clienteService.guardar(cliente, file);
 			
 			mensajeria.addFlashAttribute("mensajeExito", (cliente.getId() != null && cliente.getId() > 0) ? "Cliente editado exitosamente" : "Cliente creado exitosamente");
 			status.setComplete();

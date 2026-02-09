@@ -1,13 +1,8 @@
 package com.tocttaviano.crudclientes.app.services;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,9 +18,11 @@ import com.tocttaviano.crudclientes.app.repositories.IClienteRepository;
 public class ClienteServiceImpl implements IClienteService {
 	
 	private final IClienteRepository clienteRepository;
+	private final IFotoPerfilService fotoPerfilService;
 	
-	public ClienteServiceImpl(IClienteRepository clienteRepository) {
+	public ClienteServiceImpl(IClienteRepository clienteRepository, IFotoPerfilService fotoPerfilService) {
 		this.clienteRepository = clienteRepository;
+		this.fotoPerfilService = fotoPerfilService;
 	}
 	
 	@Override
@@ -38,26 +35,7 @@ public class ClienteServiceImpl implements IClienteService {
 	@Transactional
 	public Cliente guardar(Cliente cliente, MultipartFile foto) throws IOException {
 		if (!foto.isEmpty())
-		{
-			// 1. Generar un nombre único para el archivo
-	        String nombreUnico = UUID.randomUUID().toString() + "_" + foto.getOriginalFilename();
-	        
-	        // 2. Definir la ruta (puede ser absoluta o relativa)
-	        Path rootPath = Paths.get("uploads").resolve(nombreUnico);
-	        Path rootAbsolutPath = rootPath.toAbsolutePath();
-	        
-	        // 2. CREAR LA CARPETA SI NO EXISTE
-	        File directorio = rootAbsolutPath.getParent().toFile();
-	        if (!directorio.exists()) {
-	            directorio.mkdirs(); // Esto crea toda la ruta de carpetas necesaria
-	        }
-
-            // 3. Guardar el archivo en el sistema de archivos
-            Files.copy(foto.getInputStream(), rootAbsolutPath);
-            
-            // 4. Guardar el NOMBRE del archivo en la entidad
-            cliente.setFoto(nombreUnico);
-		}
+			cliente.setFoto(fotoPerfilService.guardarFotoPerfil(foto));
 		
 		return clienteRepository.save(cliente);
 	}
