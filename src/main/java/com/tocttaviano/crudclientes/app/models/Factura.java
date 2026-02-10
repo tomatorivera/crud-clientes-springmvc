@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,6 +31,7 @@ public class Factura {
 	private String observacion;
 	
 	@Column(name = "fecha_creacion")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime fechaCreacion;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -97,6 +100,10 @@ public class Factura {
 	
 	public void addItemFactura(ItemFactura item) {
 		this.items.add(item);
+	}
+	
+	public double getTotal() {
+		return items.stream().mapToDouble(ItemFactura::calcularImporte).sum();
 	}
 	
 }

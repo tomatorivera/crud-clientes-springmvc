@@ -1,9 +1,11 @@
 package com.tocttaviano.crudclientes.app.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,6 +17,9 @@ public class ItemFactura {
 	private Long id;
 	
 	private int cantidad;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Producto producto;
 	
 	public Long getId() {
 		return id;
@@ -33,8 +38,7 @@ public class ItemFactura {
 	}	
 	
 	public double calcularImporte() {
-		// To-Do: incluir producto y calcular correctamente el mporte
-		return cantidad * 1;
+		return cantidad * producto.getPrecio();
 	}
 	
 }
