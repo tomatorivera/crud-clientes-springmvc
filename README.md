@@ -17,7 +17,11 @@ Tecnologías que utilicé:
   - Bootstrap
   - Thymeleaf
 
-## Imágenes
+## Próximamente
+
+Lo estoy escalando para ser un sistema de facturación! Implementando seguridad con Spring Security, JWT, Multilenguaje l18N, y alguna que otra tecnología que me resulte interesante y útil...
+
+## Imágenes (actual)
 
 ![Listado de usuarios](img/listado-usuarios.jpeg)
 ![Formulario de agregado y edición de usuarios](img/formulario-agregado-edicion.jpeg)
