@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:insert="~{layout/layout :: head}"></head>
+<head th:replace="~{layout/layout :: head}"></head>
 <body>
-	<section th:insert="~{layout/layout :: navbar}"></section>
-	<section th:insert="~{layout/layout :: header}"></section>
+	<section th:replace="~{layout/layout :: navbar}"></section>
+	<section th:replace="~{layout/layout :: header}"></section>
 	
 	<main class="container mt-3">
 		<form id="form-factura" th:action="@{/factura/guardar/}" th:object="${factura}" method="POST">
@@ -21,14 +21,10 @@
                 <!--<span th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}" class="text-danger"></span>-->
             </section>
             
-           <!-- <section class="mb-3">
-                <label for="cliente" class="form-label">Cliente:</label>
-                <select th:field="*{cliente.id}" class="form-select" required>
-                    <option value="" disabled>Seleccione un cliente</option>
-                    <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nombre} + ' ' + ${cliente.apellido}"></option>
-                </select>
-                <span th:if="${#fields.hasErrors('cliente')}" th:errors="*{cliente}" class="text-danger"></span>
-            </section>-->
+           <section class="mb-3">
+                <label for="buscar_producto" class="form-label">Producto:</label>
+				<input type="text" id="buscar_producto" name="buscar_producto" class="form-control" placeholder="Ingrese el nombre del producto para buscar..." />
+            </section>
             
             <section class="d-flex align-items-center">
 				<input type="submit" th:value="${(factura.id != null && factura.id > 0) ? 'Editar factura' : 'Agregar factura'}" class="btn btn-primary" />
@@ -37,7 +33,8 @@
 		</form>
 	</main>
 	
-	<section th:insert="~{layout/layout :: footer}"></section>
-	<section th:insert="~{layout/layout :: scripts}"></section>
+	<section th:replace="~{layout/layout :: footer}"></section>
+	<section th:replace="~{layout/layout :: scripts}"></section>
+	<script th:replace="~{factura/autocompletado-productos :: autocompletado-productos-js}"></script>
 </body>	
 </html>

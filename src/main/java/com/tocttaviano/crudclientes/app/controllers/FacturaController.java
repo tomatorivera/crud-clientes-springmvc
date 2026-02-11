@@ -1,5 +1,6 @@
 package com.tocttaviano.crudclientes.app.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
@@ -7,11 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tocttaviano.crudclientes.app.models.Cliente;
 import com.tocttaviano.crudclientes.app.models.Factura;
+import com.tocttaviano.crudclientes.app.models.Producto;
 import com.tocttaviano.crudclientes.app.services.IClienteService;
 
 @Controller
@@ -40,6 +43,11 @@ public class FacturaController {
 		model.addAttribute("factura", factura);
 		
 		return "factura/facturaForm";
+	}
+	
+	@GetMapping("/cargar-productos/{busqueda}")
+	public @ResponseBody List<Producto> cargarProductos(@PathVariable String busqueda) {
+		return clienteService.buscarProductoPorNombre(busqueda);
 	}
 	
 }

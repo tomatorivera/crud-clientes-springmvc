@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tocttaviano.crudclientes.app.models.Cliente;
+import com.tocttaviano.crudclientes.app.models.Producto;
 
 public interface IClienteService {
 	List<Cliente> listar();
@@ -15,4 +16,5 @@ public interface IClienteService {
 	Cliente guardar(Cliente cliente, MultipartFile foto) throws IOException;
 	Optional<Cliente> buscarPorId(Long id);
 	void eliminar(Cliente cliente) throws IOException;
+	public List<Producto> buscarProductoPorNombre(String nombre);
 }

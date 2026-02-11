@@ -10,18 +10,23 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.tocttaviano.crudclientes.app.models.Cliente;
+import com.tocttaviano.crudclientes.app.models.Producto;
 import com.tocttaviano.crudclientes.app.repositories.IClienteRepository;
+import com.tocttaviano.crudclientes.app.repositories.IProductoRepository;
 
 @Service
 public class ClienteServiceImpl implements IClienteService {
 
 	private final IClienteRepository clienteRepository;
+	private final IProductoRepository productoRepository;
 	private final IFotoPerfilService fotoPerfilService;
 	
-	public ClienteServiceImpl(IClienteRepository clienteRepository, IFotoPerfilService fotoPerfilService) {
+	public ClienteServiceImpl(IClienteRepository clienteRepository, IProductoRepository productoRepository, IFotoPerfilService fotoPerfilService) {
 		this.clienteRepository = clienteRepository;
 		this.fotoPerfilService = fotoPerfilService;
+		this.productoRepository = productoRepository;
 	}
 	
 	@Override
@@ -64,6 +69,12 @@ public class ClienteServiceImpl implements IClienteService {
 	public Page<Cliente> listarPaginado(int numeroPagina, int tamanioPagina) {
 		Pageable pageable = PageRequest.of(numeroPagina, tamanioPagina);
 		return clienteRepository.findAll(pageable);
+	}
+	
+	@Override	
+	@Transactional(readOnly = true)
+	public List<Producto> buscarProductoPorNombre(String nombre) {
+		return productoRepository.findByNombreContaining(nombre);
 	}
 
 }
