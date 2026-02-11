@@ -25,8 +25,24 @@
                 <label for="buscar_producto" class="form-label">Producto:</label>
 				<input type="text" id="buscar_producto" name="buscar_producto" class="form-control" placeholder="Ingrese el nombre del producto para buscar..." />
             </section>
+			
+			<table th:replace="~{factura/plantilla-items :: items-factura}"></table>
+			<table id="cargar-item-productos" class="table table-sm table-striped table-hover ">
+				<legend class="fs-6">Productos de la factura:</legend>
+				<thead>
+					<tr>
+						<th>Nombre del producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+						<th>Subtotal</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
             
-            <section class="d-flex align-items-center">
+            <section class="d-flex align-items-center mt-5">
 				<input type="submit" th:value="${(factura.id != null && factura.id > 0) ? 'Editar factura' : 'Agregar factura'}" class="btn btn-primary" />
 				<a th:href="@{/listar}" class="btn btn-outline-primary ms-2">Volver al listado</a>
 			</section>

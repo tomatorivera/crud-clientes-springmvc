@@ -25,11 +25,40 @@
                 },
                 minLength: 2,
                 select: function(event, ui) {
-                    $("#buscar_producto").val(ui.item.label);
+                    if (itemsHelper.existeProducto(ui.item.value)) {
+						itemsHelper.incrementarCantidad(ui.item.value, ui.item.precio);
+						return false;
+					} 
+					
+					let linea = $("#plantilla-items-factura").html();
+					linea = linea.replace(/{ID}/g, ui.item.value);
+					linea = linea.replace(/{NOMBRE}/g, ui.item.label);
+					linea = linea.replace(/{PRECIO}/g, ui.item.precio);
+					
+					$("#cargar-item-productos tbody").append(linea);
+					itemsHelper.calcularImporte(ui.item.value, ui.item.precio, 1);
+					
 					return false;
                 }
             });
 		});
+		
+		let itemsHelper = {
+			calcularImporte: function(id, precio, cantidad) {
+                $("#total-importe-" + id).html('$ ' + parseInt(precio) * parseInt(cantidad));
+            },
+			existeProducto: function(id) {
+				return $('input[name="id_item[]"][value="' + id + '"]').length > 0;
+			},
+			incrementarCantidad: function(id, precio) {
+            	let cantidad = $("#cantidad_" + id).val() 
+									? parseInt($("#cantidad_" + id).val()) + 1
+									: 0;
+									
+				$("#cantidad_" + id).val(cantidad);
+				this.calcularImporte(id, precio, cantidad);
+            }
+		}
 	</script>
 </body>
 </html>
