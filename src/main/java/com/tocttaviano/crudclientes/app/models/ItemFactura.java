@@ -27,6 +27,14 @@ public class ItemFactura {
 	@JoinColumn(name = "id_producto")
 	private Producto producto;
 	
+	public ItemFactura() {
+	}
+	
+	public ItemFactura(Producto producto, int cantidad) {
+		this.producto = producto;
+		this.cantidad = cantidad;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -45,6 +53,22 @@ public class ItemFactura {
 	
 	public double calcularImporte() {
 		return cantidad * producto.getPrecio();
+	}
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+
+	public Factura getFactura() {
+		return factura;
+	}
+
+	public void setFactura(Factura factura) {
+		this.factura = factura;
 	}
 	
 }

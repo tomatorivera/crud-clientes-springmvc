@@ -41,21 +41,28 @@
 					return false;
                 }
             });
+			
+			$("#form-factura").on('submit', function() {
+                $("#plantilla-items-factura").closest('table').remove();
+				return true;
+			});
 		});
 		
 		let itemsHelper = {
 			calcularImporte: function(id, precio, cantidad) {
-                $("#total-importe-" + id).html('$ ' + parseInt(precio) * parseInt(cantidad));
+                $("#total-importe-" + id).html('$ ' + (parseFloat(precio) * parseInt(cantidad)).toFixed(2));
 				this.calcularTotalFactura();
             },
 			existeProducto: function(id) {
 				return $('input[name="id_item[]"][value="' + id + '"]').length > 0;
 			},
 			incrementarCantidad: function(id, precio) {
-            	let cantidad = $("#cantidad_" + id).val() 
-									? parseInt($("#cantidad_" + id).val()) + 1
-									: 0;
-									
+				let cantidad = $("#cantidad_" + id).val()
+						? parseInt($("#cantidad_" + id).val()) + 1
+						: 1;
+				// ensure at least 1
+				if (cantidad < 1) cantidad = 1;
+				
 				$("#cantidad_" + id).val(cantidad);
 				this.calcularImporte(id, precio, cantidad);
             },
@@ -67,10 +74,10 @@
 				var total = 0;
 				$('span[id^="total-importe-"]').each(function() {
                     let importe = $(this).html().replace('$', '').trim();
-                    total += parseFloat(importe);
+                    total += parseFloat(importe) || 0;
                 });
 				
-				$("#total-pagar").html('$ ' + total);
+				$("#total-pagar").html('$ ' + total.toFixed(2));
 			}
 		}
 	</script>

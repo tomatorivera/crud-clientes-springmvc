@@ -12,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tocttaviano.crudclientes.app.models.Cliente;
+import com.tocttaviano.crudclientes.app.models.Factura;
 import com.tocttaviano.crudclientes.app.models.Producto;
 import com.tocttaviano.crudclientes.app.repositories.IClienteRepository;
+import com.tocttaviano.crudclientes.app.repositories.IFacturaRepository;
 import com.tocttaviano.crudclientes.app.repositories.IProductoRepository;
 
 @Service
@@ -22,11 +24,18 @@ public class ClienteServiceImpl implements IClienteService {
 	private final IClienteRepository clienteRepository;
 	private final IProductoRepository productoRepository;
 	private final IFotoPerfilService fotoPerfilService;
+	private final IFacturaRepository facturaRepository;
 	
-	public ClienteServiceImpl(IClienteRepository clienteRepository, IProductoRepository productoRepository, IFotoPerfilService fotoPerfilService) {
+	public ClienteServiceImpl(
+			IClienteRepository clienteRepository, 
+			IProductoRepository productoRepository, 
+			IFotoPerfilService fotoPerfilService, 
+			IFacturaRepository facturaRepository) 
+	{
 		this.clienteRepository = clienteRepository;
 		this.fotoPerfilService = fotoPerfilService;
 		this.productoRepository = productoRepository;
+		this.facturaRepository = facturaRepository;
 	}
 	
 	@Override
@@ -75,6 +84,18 @@ public class ClienteServiceImpl implements IClienteService {
 	@Transactional(readOnly = true)
 	public List<Producto> buscarProductoPorNombre(String nombre) {
 		return productoRepository.findByNombreContaining(nombre);
+	}
+
+	@Override
+	@Transactional
+	public void guardarFactura(Factura factura) {
+		facturaRepository.save(factura);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Optional<Producto> buscarProductoPorId(Long id) {
+		return productoRepository.findById(id);
 	}
 
 }

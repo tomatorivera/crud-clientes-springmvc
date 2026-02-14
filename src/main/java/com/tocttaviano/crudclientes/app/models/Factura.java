@@ -18,6 +18,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "facturas")
@@ -27,7 +29,11 @@ public class Factura {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotEmpty
+	@Size(max = 200)
 	private String descripcion;
+	
+	@Size(max = 200)
 	private String observacion;
 	
 	@Column(name = "fecha_creacion")
@@ -99,6 +105,7 @@ public class Factura {
 	}
 	
 	public void addItemFactura(ItemFactura item) {
+		item.setFactura(this);
 		this.items.add(item);
 	}
 	

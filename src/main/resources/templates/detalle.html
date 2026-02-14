@@ -46,7 +46,7 @@
 						<tr th:each="factura : ${cliente.facturas}">
 	                        <td th:text="${factura.id}"></td>
 	                        <td th:text="${factura.descripcion}"></td>
-	                        <td th:text="${factura.fecha}"></td>
+	                        <td th:text="${factura.fechaCreacion}"></td>
 	                        <td th:text="${factura.total}"></td>
 						</tr>
 					</tbody>
