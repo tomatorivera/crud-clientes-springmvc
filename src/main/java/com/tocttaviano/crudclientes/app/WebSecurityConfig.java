@@ -1,5 +1,6 @@
 package com.tocttaviano.crudclientes.app;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,11 +14,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
-
-	@Bean
-	static BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	/**
 	 * Registro de usuarios en memoria para pruebas. En un entorno de producción, se debería implementar un UserDetailsService
@@ -33,7 +32,7 @@ public class WebSecurityConfig {
 		// Usuario normal de prueba
 		manager.createUser(User
 				.withUsername("demo")
-				.password(passwordEncoder().encode("demo"))
+				.password(passwordEncoder.encode("demo"))
 				.roles("USER")
 				.build()
 		);
@@ -41,7 +40,7 @@ public class WebSecurityConfig {
 		// Usuario administrador de prueba
 		manager.createUser(User
 	               .withUsername("admin")
-	               .password(passwordEncoder().encode("admin"))
+	               .password(passwordEncoder.encode("admin"))
 	               .roles("ADMIN","USER")
 	               .build()
 	    );
