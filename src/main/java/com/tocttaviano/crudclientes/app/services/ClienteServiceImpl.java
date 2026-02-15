@@ -85,23 +85,29 @@ public class ClienteServiceImpl implements IClienteService {
 	public List<Producto> buscarProductoPorNombre(String nombre) {
 		return productoRepository.findByNombreContaining(nombre);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Optional<Producto> buscarProductoPorId(Long id) {
+		return productoRepository.findById(id);
+	}
 
 	@Override
 	@Transactional
 	public void guardarFactura(Factura factura) {
 		facturaRepository.save(factura);
 	}
-
+	
 	@Override
-	@Transactional(readOnly = true)
-	public Optional<Producto> buscarProductoPorId(Long id) {
-		return productoRepository.findById(id);
+	@Transactional
+	public void eliminarFactura(Long id) {
+		facturaRepository.deleteById(id);
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
 	public Optional<Factura> buscarFacturaPorId(Long id) {
-		return facturaRepository.findById(id);
+		return Optional.ofNullable(facturaRepository.findFacturaByIdWithClienteWithItemFacturaWithProducto(id));
 	}
 
 }

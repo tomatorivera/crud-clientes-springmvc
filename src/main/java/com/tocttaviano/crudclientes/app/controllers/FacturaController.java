@@ -122,4 +122,18 @@ public class FacturaController {
 		
 	}
 	
+	@GetMapping("/eliminar/{id}")
+	public String eliminar(@PathVariable Long id, RedirectAttributes mensajeria) {
+		Optional<Factura> optFactura = clienteService.buscarFacturaPorId(id);
+		if (optFactura.isEmpty()) {
+			mensajeria.addFlashAttribute("mensajeError", "No se ha encontrado la factura especificada para eliminar");
+			return "redirect:/listar";
+		}
+		
+		clienteService.eliminarFactura(id);
+		
+		mensajeria.addFlashAttribute("mensajeExito", "Factura eliminada con éxito");
+		return "redirect:/listar";
+	}
+	
 }

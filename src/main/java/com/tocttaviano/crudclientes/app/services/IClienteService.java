@@ -22,5 +22,6 @@ public interface IClienteService {
 	Optional<Producto> buscarProductoPorId(Long id);
 	
 	void guardarFactura(Factura factura);
+	void eliminarFactura(Long id);
 	Optional<Factura> buscarFacturaPorId(Long id);
 }

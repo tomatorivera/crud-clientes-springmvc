@@ -33,7 +33,7 @@
 				
 				<a class="btn btn-primary" th:href="@{/factura/crear/} + ${cliente.id}">+ Crear nueva factura</a>
 				
-				<table th:if="${not #lists.isEmpty(cliente.facturas)}" class="table table-striped table-hover my-2 w-100">
+				<table th:if="${not #lists.isEmpty(cliente.facturas)}" class="table table-striped table-hover my-2 w-100 text-center">
 					<thead>
 						<tr>
 							<th>Número de factura</th>
@@ -49,6 +49,7 @@
 	                        <td th:text="${factura.fechaCreacion}"></td>
 							<td>
 								<a th:href="@{/factura/detalle/} + ${factura.id}" class="btn btn-info btn-sm">Ver detalle</a>
+								<a th:href="@{/factura/eliminar/} + ${factura.id}" class="btn btn-danger btn-sm" onclick="return confirm('Está seguro que desea eliminar la factura?');">Eliminar factura</a>
 							</td>
 						</tr>
 					</tbody>
