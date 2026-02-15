@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,6 +39,7 @@ public class FacturaController {
 		this.clienteService = clienteService;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/crear/{idCliente}")
 	public String crear(@PathVariable Long idCliente, Model model, RedirectAttributes mensajeria) {
 		Optional<Cliente> optCliente = clienteService.buscarPorId(idCliente);
@@ -55,11 +57,13 @@ public class FacturaController {
 		return "factura/facturaForm";
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/cargar-productos/{busqueda}")
 	public @ResponseBody List<Producto> cargarProductos(@PathVariable String busqueda) {
 		return clienteService.buscarProductoPorNombre(busqueda);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/guardar")
 	public String guardar(
 			@Valid Factura factura, 
@@ -107,6 +111,7 @@ public class FacturaController {
 		return "redirect:/listar";
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/detalle/{id}")
 	public String detalle(@PathVariable Long id, Model model, RedirectAttributes mensajeria) {
 		Optional<Factura> optFactura = clienteService.buscarFacturaPorId(id);
@@ -122,6 +127,7 @@ public class FacturaController {
 		
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/eliminar/{id}")
 	public String eliminar(@PathVariable Long id, RedirectAttributes mensajeria) {
 		Optional<Factura> optFactura = clienteService.buscarFacturaPorId(id);

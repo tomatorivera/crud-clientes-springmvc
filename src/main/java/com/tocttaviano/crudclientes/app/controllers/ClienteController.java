@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,7 @@ public class ClienteController {
 		this.clienteService = clienteService;
 		this.logger = LoggerFactory.getLogger(ClienteController.class);
 	}
-	
+	 
 	@GetMapping({"/", "/index", "/listar"})
 	public String listar(
 			@RequestParam(defaultValue="0") int numeroPagina, 
@@ -55,6 +56,7 @@ public class ClienteController {
 		return "index";
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping("/detalle/{id}")
 	public String detalle(@PathVariable Long id, Model model, RedirectAttributes mensajeria) {
 		Optional<Cliente> optCliente = clienteService.buscarPorIdConFacturas(id);
@@ -70,6 +72,7 @@ public class ClienteController {
 		return "detalle";
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/crear")
 	public String crear(Model model) {
 		model.addAttribute("cliente", new Cliente());
@@ -77,6 +80,7 @@ public class ClienteController {
 		return "clienteForm";
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/editar/{id}")
 	public String editar(@PathVariable Long id, Model model) {
 		Optional<Cliente> optCliente = clienteService.buscarPorId(id);
@@ -92,6 +96,7 @@ public class ClienteController {
 		return "clienteForm";
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/guardar")
 	public String guardar(
 			@Valid Cliente cliente, 
@@ -123,6 +128,7 @@ public class ClienteController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/eliminar/{id}")
 	public String eliminar(@PathVariable Long id, RedirectAttributes mensajeria) {
 		Optional<Cliente> optCliente = clienteService.buscarPorId(id);
