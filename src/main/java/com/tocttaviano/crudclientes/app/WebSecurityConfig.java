@@ -77,7 +77,9 @@ public class WebSecurityConfig {
         	 login.defaultSuccessUrl("/", true);
          })
          // Permisos para logout
-         .logout(logout -> logout.permitAll());
+         .logout(logout -> logout.permitAll())
+         // Manejo de errores
+         .exceptionHandling(ex -> ex.accessDeniedPage("/auth/403"));
 		 
 		return http.build();
 	}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{layout/layout :: head}"></head>
+<body>
+    <div th:replace="~{layout/layout :: navbar}"></div>
+	<div th:replace="~{layout/layout :: errores}"></div>
+	
+	<main class="my-5 mx-auto row" style="max-width: 1000px;">
+        <section class="col-12 col-md-6 mx-auto">
+            <h2 class="fw-bold text-danger">403 - Acceso denegado</h2>
+            <p class="mb-4">No tienes permiso para acceder a esta página.</p>
+			<hr />
+            <a th:href="@{/listar}" class="btn btn-outline-secondary mt-3">Volver al inicio</a>
+        </section>
+	</main>
+	
+	<div th:replace="~{layout/layout :: footer}"></div>
+	<div th:replace="~{layout/layout :: scripts}"></div>
+</body>
+</html>
