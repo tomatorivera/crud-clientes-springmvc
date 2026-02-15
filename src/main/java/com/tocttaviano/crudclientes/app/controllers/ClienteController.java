@@ -50,7 +50,7 @@ public class ClienteController {
 	
 	@GetMapping("/detalle/{id}")
 	public String detalle(@PathVariable Long id, Model model, RedirectAttributes mensajeria) {
-		Optional<Cliente> optCliente = clienteService.buscarPorId(id);
+		Optional<Cliente> optCliente = clienteService.buscarPorIdConFacturas(id);
 		if (optCliente.isEmpty()) {
 			logger.warn("Cliente con ID " + id + " no encontrado para detalle.");
 			mensajeria.addFlashAttribute("mensajeError", "No se ha encontrado al cliente especificado para mostrar su detalle");

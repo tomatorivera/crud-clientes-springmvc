@@ -65,6 +65,12 @@ public class ClienteServiceImpl implements IClienteService {
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
+	public Optional<Cliente> buscarPorIdConFacturas(Long id) {
+		return Optional.ofNullable(clienteRepository.findByIdWithFactura(id));
+	}
+	
+	@Override
 	@Transactional
 	public void eliminar(Cliente cliente) throws IOException {
 		if (cliente.getFoto() != null)

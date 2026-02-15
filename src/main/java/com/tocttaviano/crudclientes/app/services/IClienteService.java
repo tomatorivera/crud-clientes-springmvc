@@ -16,6 +16,7 @@ public interface IClienteService {
 	Page<Cliente> listarPaginado(int numeroPagina, int tamanioPagina);
 	Cliente guardar(Cliente cliente, MultipartFile foto) throws IOException;
 	Optional<Cliente> buscarPorId(Long id);
+	Optional<Cliente> buscarPorIdConFacturas(Long id);
 	void eliminar(Cliente cliente) throws IOException;
 	
 	List<Producto> buscarProductoPorNombre(String nombre);
