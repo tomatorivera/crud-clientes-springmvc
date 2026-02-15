@@ -5,6 +5,49 @@
 	<section th:replace="~{layout/layout :: navbar}"></section>
 	<section th:replace="~{layout/layout :: header}"></section>
 	
+	<section class="container">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title border-bottom mb-3">Factura #<span class="fw-bold" th:text="${factura.id}"></span></h5>
+                <p class="card-text mb-0"><strong>Cliente:</strong> <span th:text="${factura.cliente.nombre}"></span></p>
+                <p class="card-text mb-0"><strong>Fecha de creación:</strong> <span th:text="${#temporals.format(factura.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></span></p>
+                <p class="card-text"><strong>Total:</strong> $<span th:text="${factura.total}"></span></p>
+            </div>
+        </div>
+		
+		<div th:if="${factura.observacion != null && not #strings.isEmpty(factura.observacion)}" class="card mb-3">
+			<div class="card-body">
+                <h5 class="card-title border-bottom mb-3">Observaciones:</h5>
+                <p class="card-text" th:text="${factura.observacion}"></p>
+            </div>
+		</div>
+
+        <h3 class="fw-semibold border-bottom mt-4">Productos</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${factura.items}">
+                    <td th:text="${item.producto.nombre}"></td>
+                    <td th:text="${item.cantidad}"></td>
+                    <td>$<span th:text="${item.producto.precio}"></span></td>
+                    <td>$<span th:text="${item.calcularImporte()}"></span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="d-flex align-items-center gap-2">
+			<a th:href="@{/detalle/} + ${factura.cliente.id}" class="btn btn-secondary">Volver al cliente</a>
+			<a th:href="@{/listar}" class="btn btn-outline-secondary">Volver al listado de productos</a>
+		</div>
+	</section>
+		
 	<section th:replace="~{layout/layout :: footer}"></section>
 	<section th:replace="~{layout/layout :: scripts}"></section>
 </body>

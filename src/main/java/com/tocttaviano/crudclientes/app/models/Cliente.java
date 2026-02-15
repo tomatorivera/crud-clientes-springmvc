@@ -50,7 +50,7 @@ public class Cliente {
 	private String foto;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")
-	@JsonIgnore // avoid recursion when serializing Cliente (e.g., when returning a Factura that contains its Cliente)
+	@JsonIgnore
 	private List<Factura> facturas;
 	
 	@PrePersist
