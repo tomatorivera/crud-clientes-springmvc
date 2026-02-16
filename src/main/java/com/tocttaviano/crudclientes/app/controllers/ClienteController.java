@@ -1,10 +1,13 @@
 package com.tocttaviano.crudclientes.app.controllers;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -33,6 +36,9 @@ public class ClienteController {
 	private final IClienteService clienteService;
 	private final Logger logger;
 	
+	@Autowired
+	private MessageSource messageSource;
+	
 	public ClienteController(IClienteService clienteService) {
 		this.clienteService = clienteService;
 		this.logger = LoggerFactory.getLogger(ClienteController.class);
@@ -42,7 +48,8 @@ public class ClienteController {
 	public String listar(
 			@RequestParam(defaultValue="0") int numeroPagina, 
 			@RequestParam(defaultValue="5") int tamanioPagina,
-			Model model) 
+			Model model,
+			Locale locale) 
 	{	
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null) {
@@ -51,24 +58,29 @@ public class ClienteController {
 		
 		Page<Cliente> paginaClientes = clienteService.listarPaginado(numeroPagina, tamanioPagina); // <- Obtengo la página
 		
-		model.addAttribute("tituloPagina", "Listado de clientes");
+		model.addAttribute("tituloPagina", messageSource.getMessage("Text.cliente.listar.titulo", null, locale));
 		model.addAttribute("clientes", paginaClientes);
 		return "index";
 	}
 	
 	@PreAuthorize("hasRole('USER')")
 	@GetMapping("/detalle/{id}")
-	public String detalle(@PathVariable Long id, Model model, RedirectAttributes mensajeria) {
+	public String detalle(
+			@PathVariable Long id, 
+			Model model, 
+			RedirectAttributes mensajeria,
+			Locale locale
+	) {
 		Optional<Cliente> optCliente = clienteService.buscarPorIdConFacturas(id);
 		if (optCliente.isEmpty()) {
 			logger.warn("Cliente con ID " + id + " no encontrado para detalle.");
-			mensajeria.addFlashAttribute("mensajeError", "No se ha encontrado al cliente especificado para mostrar su detalle");
+			mensajeria.addFlashAttribute("mensajeError", messageSource.getMessage("Text.cliente.error.noEncontrado", null, locale));
 			return "redirect:/index";
 		}
 		
 		Cliente cliente = optCliente.get();
 		model.addAttribute("cliente", cliente);
-		model.addAttribute("tituloPagina", "Detalle del cliente");
+		model.addAttribute("tituloPagina", messageSource.getMessage("Text.cliente.detalle.titulo", null, locale));
 		return "detalle";
 	}
 	
