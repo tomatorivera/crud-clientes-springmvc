@@ -1,8 +1,8 @@
-# CRUD Clientes
+# Sistema de facturación
 
 ## Breve descripción
 
-Pequeño sistema CRUD de clientes. El objetivo principal del proyecto era seguir practicando el desarrollo de aplicacones web con Spring y trabajar un poco más con Thymeleaf, para familiarizarme con su documentación y sacarle más provecho.
+Pequeño sistema de gestión de cliente y alta de facturas para los mismos. El objetivo del proyecto fue profundizar un poco más en el desarrollo de aplicaciones monolíticas con Spring Boot basadas en el patrón MVC, integrando seguridad, vistas con Thymeleaf, multilenguaje y manejo de datos con JPA
 
 ## Tecnologías
 
@@ -11,18 +11,14 @@ Tecnologías que utilicé:
   - Java
   - Spring MVC
   - Spring Data JPA
+  - Spring Security
   - MySQL
 * **Frontend**
   - HTML
   - Bootstrap
+  - JQuery
   - Thymeleaf
+* **Otros**
+  - Multilenguaje i18n
 
-## Próximamente
-
-Lo estoy escalando para ser un sistema de facturación! Implementando seguridad con Spring Security, JWT, Multilenguaje l18N, y alguna que otra tecnología que me resulte interesante y útil...
-
-## Imágenes (actual)
-
-![Listado de usuarios](img/listado-usuarios.jpeg)
-![Formulario de agregado y edición de usuarios](img/formulario-agregado-edicion.jpeg)
-![Detalle del cliente](img/detalle-cliente.jpeg)
+## Imágenes
