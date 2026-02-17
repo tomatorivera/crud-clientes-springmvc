@@ -7,17 +7,17 @@
 	
 	<main class="my-5 mx-auto row" style="max-width: 1000px;">
 		<section class="col-12 col-md-6 mx-auto">
-			<h2 class="border-bottom fw-semibold mb-4">Iniciar sesión</h2>
+			<h2 class="border-bottom fw-semibold mb-4" th:text="#{Text.login.titulo}">Iniciar sesión</h2>
 			<form class="w-100" th:action="@{/login}" method="post">
 	            <section class="mb-3">
-	                <label for="username" class="form-label">Nombre de usuario</label>
+	                <label for="username" class="form-label" th:text="#{Text.login.nombreUsuario} + ':'">Nombre de usuario</label>
 	                <input type="text" class="form-control" id="username" name="username" autofocus>
 	            </section>
 	            <section class="mb-3">
-	                <label for="password" class="form-label">Contraseña</label>
+	                <label for="password" class="form-label" th:text="#{Text.login.contrasenia} + ':'">Contraseña</label>
 	                <input type="password" class="form-control" id="password" name="password">
 	            </section>
-	            <button type="submit" class="btn btn-primary mt-3">Login</button>
+	            <button type="submit" class="btn btn-primary mt-3" th:text="#{Text.login.btn}">Login</button>
 			</form>
 		</section>
 	</main>

@@ -7,10 +7,10 @@
 	
 	<main class="my-5 mx-auto row" style="max-width: 1000px;">
         <section class="col-12 col-md-6 mx-auto">
-            <h2 class="fw-bold text-danger">403 - Acceso denegado</h2>
-            <p class="mb-4">No tienes permiso para acceder a esta página.</p>
+            <h2 class="fw-bold text-danger">403 - <span th:text="#{Text.login.error.403}"></span></h2>
+            <p class="mb-4" th:text="#{Text.login.error.403.detalles}">No tienes permiso para acceder a esta página.</p>
 			<hr />
-            <a th:href="@{/listar}" class="btn btn-outline-secondary mt-3">Volver al inicio</a>
+            <a th:href="@{/listar}" class="btn btn-outline-secondary mt-3" th:text="#{Text.cliente.listar.btn}">Volver al inicio</a>
         </section>
 	</main>
 	
